@@ -1,9 +1,5 @@
-"use client";
-
-import { useState } from 'react';
-import { Button } from "@/components/ui/button";
-import emailjs from 'emailjs-com'; // Import EmailJS
-import './styles.css'; // Import the CSS file
+import React, { useState } from 'react';
+import emailjs from 'emailjs-com';
 
 export default function ConnectPESChatbot() {
   const [step, setStep] = useState(1);
@@ -11,13 +7,11 @@ export default function ConnectPESChatbot() {
     name: '',
     srn: '',
     idCard: null,
-    role: '',
     company: '',
     contactMethod: ''
   });
   const [message, setMessage] = useState('');
 
-  // Handle input changes
   const handleChange = (e) => {
     const { name, value, files } = e.target;
     setFormData((prev) => ({
@@ -26,24 +20,17 @@ export default function ConnectPESChatbot() {
     }));
   };
 
-  // Handle form submission
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Prepare form data for email
     const emailData = {
       name: formData.name,
       srn: formData.srn,
-      role: formData.role,
       company: formData.company,
       contactMethod: formData.contactMethod,
     };
 
-    // Log formData to check if it contains expected values
-    console.log('Form Data:', formData);
-
-    // Send data via EmailJS
-    emailjs.send('service_nra8ibh', 'template_7zhdusk', emailData, 'vW5x6b44wyKCaQKLb')
+    emailjs.send('service_4ii20a5', 'template_fpxg518', emailData, 'U0Y3d6YQ3IXTIXliH')
       .then((response) => {
         console.log('Email sent successfully:', response);
         setStep(2);
@@ -56,48 +43,73 @@ export default function ConnectPESChatbot() {
   };
 
   return (
-    <div className="min-h-screen w-full bg-gray-100">
-      <div className="grid md:grid-cols-[260px_1fr] min-h-screen w-full bg-gradient-to-r from-orange-400 via-blue-500 to-blue-700 text-gray-800">
-        <div className="hidden md:flex flex-col side-component shadow-lg p-4 rounded-lg">
-          <Button variant="ghost" className="justify-start w-full gap-2 px-2 text-left">
-            <div className="flex items-center justify-center rounded-full w-7 h-7 bg-gray-200">
-              <BotIcon className="w-4 h-4 text-blue-600" />
+    <div className="min-h-screen w-full bg-gray-900 text-white">
+      <div className="grid md:grid-cols-[260px_1fr] min-h-screen w-full">
+        <div className="hidden md:flex flex-col side-component p-6 bg-gray-800 shadow-lg">
+          <button className="flex items-center justify-start w-full gap-2 px-3 py-2 text-left hover:bg-gray-700 rounded-lg">
+            <div className="flex items-center justify-center rounded-full w-9 h-9 bg-gray-700">
+              <BotIcon className="w-6 h-6 text-white" />
             </div>
-            <div className="overflow-hidden text-sm grow text-ellipsis whitespace-nowrap text-gray-700">ConnectPES</div>
-          </Button>
-          <div className="mt-4 text-gray-600">
-            <p>Welcome to connectPES! This form helps you connect with PES Alumni if you require additional information about the concerned organization. Please enter the following details:</p>
+            <div className="text-lg font-semibold grow text-ellipsis whitespace-nowrap">nucleusFUSION</div>
+          </button>
+          <div className="mt-6 text-gray-400 text-sm leading-relaxed">
+            <img src="/nucleus-removebg-preview.png" alt = "NUCLEUS" />
+            <p>Welcome to nucleusFUSION! This form helps you connect with mentors if you require tips on cracking an interview for your preferred organization. Please enter the following details:</p>
           </div>
         </div>
-        <div className="flex flex-col items-start flex-1 p-6 max-w-2xl mx-auto bg-white shadow-lg rounded-lg">
+        <div className="flex flex-col items-start flex-1 p-8 max-w-2xl mx-auto bg-gray-100 shadow-lg rounded-lg text-gray-900">
           {step === 1 ? (
-            <form className="space-y-4" onSubmit={handleSubmit}>
-              <div>
-                <label className="block text-sm font-medium text-gray-700">Your Full Name:</label>
-                <Input name="name" value={formData.name} onChange={handleChange} required className="mt-1 p-3 border rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" />
+            <form className="space-y-6 w-full" onSubmit={handleSubmit}>
+              <div className="w-full">
+                <label className="block text-sm font-medium">Your Full Name:</label>
+                <input 
+                  name="name" 
+                  value={formData.name} 
+                  onChange={handleChange} 
+                  required 
+                  className="mt-1 p-3 w-full border rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" 
+                />
               </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700">Your SRN :</label>
-                <Input name="srn" value={formData.srn} onChange={handleChange} required className="mt-1 p-3 border rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" />
+              <div className="w-full">
+                <label className="block text-sm font-medium">Your SRN:</label>
+                <input 
+                  name="srn" 
+                  value={formData.srn} 
+                  onChange={handleChange} 
+                  required 
+                  className="mt-1 p-3 w-full border rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" 
+                />
               </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700">Upload Your ID Card:</label>
-                <Input type="file" name="idCard" onChange={handleChange} required className="mt-1 p-3 border rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" />
+              <div className="w-full">
+                <label className="block text-sm font-medium">The organization you are interviewing for:</label>
+                <input 
+                  name="company" 
+                  value={formData.company} 
+                  onChange={handleChange} 
+                  required 
+                  className="mt-1 p-3 w-full border rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" 
+                />
               </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700">The organization you want information for:</label>
-                <Input name="company" value={formData.company} onChange={handleChange} required className="mt-1 p-3 border rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" />
+              <div className="w-full">
+                <label className="block text-sm font-medium">Your Contact(s) (email, phone):</label>
+                <input 
+                  name="contactMethod" 
+                  value={formData.contactMethod} 
+                  onChange={handleChange} 
+                  required 
+                  className="mt-1 p-3 w-full border rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" 
+                />
               </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700">Your Preferred Contact Method (email, phone):</label>
-                <Input name="contactMethod" value={formData.contactMethod} onChange={handleChange} required className="mt-1 p-3 border rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" />
-              </div>          
-            
-              <Button type="submit" className="w-full mt-4 bg-blue-600 text-white hover:bg-blue-700">Submit your details</Button>
+              <button 
+                type="submit" 
+                className="w-full mt-4 bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700"
+              >
+                Submit your details
+              </button>
             </form>
           ) : (
             <div className="text-center">
-              <p className="text-lg text-gray-800">{message}</p>
+              <p className="text-lg">{message}</p>
             </div>
           )}
         </div>
