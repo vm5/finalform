@@ -2,7 +2,6 @@
 
 import { useState } from 'react';
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input"; // Use Input instead of Textarea for single-line fields
 import emailjs from 'emailjs-com'; // Import EmailJS
 import './styles.css'; // Import the CSS file
 
